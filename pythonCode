@@ -1,0 +1,50 @@
+## This program allows the user to ascertain accumulated interest from an investment, or the monthly repayment on a housing mortgage.
+## User will have to input a selection between 'investment' or 'bond'
+## If statements are used based on the user's inputs, and a while loop checks for invalid inputs
+
+
+import math     # for exponential calcs
+
+check = False   # for while loop validation
+
+# This while loop checks for 'investment' or 'bond' as valid inputs, and then allows the program to run further if valid. 
+while (check == False):
+
+    choice = input('''Choose either 'investment' or 'bond' from the menu below to proceed:
+    investment  -   to calculate the amount of interest you'll earn on your investment
+    bond        -   to calculate the amount you'll have to pay on a home loan
+    
+    ''').lower()
+
+    if (choice == "investment") or (choice == "bond"):
+        check = True
+    else:
+        print("\nYou have not entered a valid choice. \nPlease try again. \n")
+
+
+if (choice == "investment"):
+
+    deposit = float(input("Enter the amount of deposit: $"))
+    rate = float(input("Enter the interest rate % (do not enter the '%', ie, if 4% then enter 4): ")) / 100
+    time = float(input("Enter the number of years of investment: "))
+    interest = input("Choose the method of interest aggregation (simple/compound): ").lower()
+
+    if (interest == "simple"):
+        total_int = deposit * (1 + rate * time)
+        print(f"The total amount of interest after {round(time, 2)} year(s) is ${round(total_int, 2)}.")
+    elif (interest == "compound"):
+        total_int = deposit * math.pow(1 + rate, time)      # from import math
+        print(f"The total amount of interest after {round(time, 2)} year(s) is ${round(total_int, 2)}.")
+    else:
+        print("Your choice of interest aggregation is invalid. \nPlease try again.")
+
+
+# An else statement is sufficient here because the while loop above has validated that the initial user inputs are only either 'investment' or 'bond'
+else:
+    present_value = float(input("Enter the present value of the house: $"))
+    monthly_rate = float(input("Enter the annual interest rate % (do not enter the '%', ie, if 4% then enter 4): ")) / (100 * 12)
+    time = float(input("Enter the number of months of repayment: "))
+
+    monthly_payment = (monthly_rate * present_value) / (1 - (1 + monthly_rate) ** (-time))
+
+    print(f"The monthly repayment is ${round(monthly_payment, 2)}.")
